@@ -1,3 +1,3 @@
-class CsvProcessor
+class CSVProcessor
 
 end

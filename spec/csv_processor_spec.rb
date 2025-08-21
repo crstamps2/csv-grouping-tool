@@ -1,6 +1,6 @@
 require_relative '../csv_processor'
 
-describe CsvProcessor do
+describe CSVProcessor do
   subject { described_class.new }
 
   it 'should be able to count the number of rows, excluding the header row' do
