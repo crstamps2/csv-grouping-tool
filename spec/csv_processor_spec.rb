@@ -1,3 +1,5 @@
+require_relative '../csv_processor'
+
 describe CsvProcessor do
   subject { described_class.new }
 
