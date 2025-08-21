@@ -1,6 +1,6 @@
-require_relative '../csv_processor'
+require_relative '../csv_reader'
 
-describe CSVProcessor do
+describe CSVReader do
   subject { described_class.new('spec/fixtures/test.csv') }
 
   describe '#rows' do
