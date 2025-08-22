@@ -1,14 +1,10 @@
 require 'csv'
 
 class CSVReader
-  def initialize(file_path)
-    @file_path = file_path
-  end
-
   # returns an array of hashes, each hash representing a row in the CSV
-  def rows
+  def self.call(file_path)
     results = []
-    CSV.foreach(@file_path, headers: true, header_converters: :symbol) do |row|
+    CSV.foreach(file_path, headers: true, header_converters: :symbol) do |row|
       results << row.to_h
     end
     results

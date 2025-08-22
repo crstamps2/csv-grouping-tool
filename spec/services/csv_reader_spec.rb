@@ -1,14 +1,14 @@
 require_relative '../../services/csv_reader'
 
 describe CSVReader do
-  subject { described_class.new('spec/fixtures/test.csv') }
+  subject { described_class.call('spec/fixtures/test.csv') }
 
   describe '#rows' do
     it 'should be able to count the number of rows, excluding the header row' do
-      expect(subject.rows.count).to eq(8)
+      expect(subject.count).to eq(8)
     end
     it 'returns a hash for each row' do
-      rows = subject.rows
+      rows = subject
       expect(rows.first).to eq({
         email: "johns@home.com",
         firstname: "John",
