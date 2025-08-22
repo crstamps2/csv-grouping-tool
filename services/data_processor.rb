@@ -1,17 +1,17 @@
 class DataProcessor
-  def self.call(data)
-    email_to_id_map = {}
+  def self.call(data, grouping_method = :email)
+    value_to_id_map = {}
     id = 0
     data.map do |row|
-      email = row[:email]
-      if email.empty?
+      value = row[grouping_method].to_s
+      if value.empty?
         id += 1
         {id: id}.merge(row)
-      elsif email_to_id_map.key?(email)
-        {id: email_to_id_map[email]}.merge(row)
+      elsif value_to_id_map.key?(value)
+        {id: value_to_id_map[value]}.merge(row)
       else
         id += 1
-        email_to_id_map[email] = id
+        value_to_id_map[value] = id
         {id: id}.merge(row)
       end
     end
