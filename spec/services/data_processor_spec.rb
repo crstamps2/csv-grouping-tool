@@ -88,5 +88,31 @@ describe DataProcessor do
         end
       end
     end
+
+    context 'group by both email and phone' do
+      subject { described_class.call(data, :both) }
+
+      let(:data) do
+        [
+          { email1: 'johns@home.com', phone1: '(555) 123-4567', firstname: 'John', lastname: 'Smith', zip: '94105' },
+          { email1: 'charles@work.com', phone1: '(111) 222-3333', firstname: 'Charles', lastname: 'Chou', zip: '92064' },
+          { email1: 'janes@home.com', phone1: '(555) 123-4567', firstname: 'Jane', lastname: 'Smith', zip: '94105' },
+          { email1: 'janes@home.com', phone1: '(444) 555-6666', firstname: 'Janet', lastname: 'Smith', zip: '94105' },
+          { email1: 'sue@company.com', phone1: '(777) 888-9999', firstname: 'Sue', lastname: 'Smith', zip: '94105' },
+          { email1: 'john.smith@work.com', email2: 'johns@home.com', phone1: '(222) 333-4444', firstname: 'Johnny', lastname: 'Smith', zip: '94105' }
+        ]
+      end
+
+      it 'groups records by shared emails OR phone numbers' do
+        expect(subject).to eq([
+          { id: 1, email1: 'johns@home.com', phone1: '(555) 123-4567', firstname: 'John', lastname: 'Smith', zip: '94105' },
+          { id: 2, email1: 'charles@work.com', phone1: '(111) 222-3333', firstname: 'Charles', lastname: 'Chou', zip: '92064' },
+          { id: 1, email1: 'janes@home.com', phone1: '(555) 123-4567', firstname: 'Jane', lastname: 'Smith', zip: '94105' },
+          { id: 1, email1: 'janes@home.com', phone1: '(444) 555-6666', firstname: 'Janet', lastname: 'Smith', zip: '94105' },
+          { id: 3, email1: 'sue@company.com', phone1: '(777) 888-9999', firstname: 'Sue', lastname: 'Smith', zip: '94105' },
+          { id: 1, email1: 'john.smith@work.com', email2: 'johns@home.com', phone1: '(222) 333-4444', firstname: 'Johnny', lastname: 'Smith', zip: '94105' }
+        ])
+      end
+    end
   end
 end
