@@ -1,4 +1,4 @@
-require_relative '../csv_reader'
+require_relative '../../services/csv_reader'
 
 describe CSVReader do
   subject { described_class.new('spec/fixtures/test.csv') }
