@@ -2,6 +2,9 @@ class CSVWriter
   def self.call(data, original_headers, output_path)
     return if data.nil? || data.empty?
 
+    output_dir = File.dirname(output_path)
+    FileUtils.mkdir_p(output_dir) unless Dir.exist?(output_dir)
+
     final_headers = ['ID'] + original_headers
     header_to_symbol_map = original_headers.to_h { |h| [h, h.downcase.to_sym] }
 
