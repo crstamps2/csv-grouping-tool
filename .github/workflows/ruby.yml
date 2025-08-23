@@ -29,8 +29,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           # Specify the Ruby version you want to use.
-          # Your log mentioned 2.6, so we'll use that.
-          ruby-version: 2.6
+          # Your log mentioned 3.0, so we'll use that.
+          ruby-version: 3.0
 
       # Step 3: Install dependencies. For this project, it's just RSpec.
       - name: Install dependencies
