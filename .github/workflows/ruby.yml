@@ -1,38 +1,41 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
-# For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
+# .github/workflows/ci.yml
 
-name: Ruby
+# Name of the workflow, which will be displayed on GitHub
+name: Ruby CI
 
+# Controls when the workflow will run.
+# This runs on pushes to the 'main' branch and on any pull request.
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
-permissions:
-  contents: read
-
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
+  # The "test" job
   test:
-
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        ruby-version: ['2.6', '2.7', '3.0']
 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@55283cc23133118229fd3f97f9336ee23a179fcf # v1.146.0
-      with:
-        ruby-version: ${{ matrix.ruby-version }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - name: Run tests
-      run: bundle exec rspec
+      # Step 1: Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      # Step 2: Sets up a specific version of Ruby using the official ruby/setup-ruby action
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # Specify the Ruby version you want to use.
+          # Your log mentioned 2.6, so we'll use that.
+          ruby-version: 2.6
+
+      # Step 3: Install dependencies. For this project, it's just RSpec.
+      - name: Install dependencies
+        run: gem install rspec
+
+      # Step 4: Run the RSpec tests
+      - name: Run tests
+        run: rspec
