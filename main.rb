@@ -57,8 +57,8 @@ begin
   
   # Step 1: Read the input CSV.
   puts "   1. Reading data from '#{input_path}'..."
-  reader_result = CsvReader.call(input_path)
-  initial_data = reader_result[:data]
+  reader_result = CSVReader.call(input_path)
+  initial_data = reader_result[:rows]
   original_headers = reader_result[:original_headers]
 
   if initial_data.empty?
